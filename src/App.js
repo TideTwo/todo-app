@@ -1,6 +1,6 @@
-import AddTodo from './AddTodo';
+import AddTodo from './components/AddTodo';
 import { useState } from 'react';
-import TodoTable from './TodoTable';
+import TodoTable from './components/TodoTable';
 
 import './App.css';
 
