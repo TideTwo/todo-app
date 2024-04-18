@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import AddTodo from './AddTodo';
+import { useState } from 'react';
+import TodoTable from './TodoTable';
+
 import './App.css';
 
-function App() {
+export default function App() {
+  const [todos, setTodos] = useState([]);
+
+  function todoAdder(newTodo) {
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
+  }
+
+  function todoRemover(todoId) {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId));
+  }
+
+  function todoEditor(targetId, changeType, newVal) {
+    console.log(targetId, changeType, newVal);
+    setTodos((prevTodos) =>
+      prevTodos.map((prevTodo) =>
+        prevTodo.id !== targetId
+          ? prevTodo
+          : { ...prevTodo, [changeType]: newVal },
+      ),
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AddTodo todoAdder={todoAdder} todos={todos} />
+      <TodoTable
+        todoRemover={todoRemover}
+        todoEditor={todoEditor}
+        todos={todos}
+      />
     </div>
   );
 }
-
-export default App;
